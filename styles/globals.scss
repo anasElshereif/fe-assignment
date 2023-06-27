@@ -1,0 +1,306 @@
+$mc: #2e2e2e;
+$light-mc: #484848;
+$light-gray: #bababa;
+$mid-gray: #989898;
+$dark-gray: #535353;
+$dark: #1a1a1a;
+$light-dark: #252525;
+$border: #404040;
+$btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+// colors classes
+
+.mc {
+  color: $mc;
+}
+
+.mc-bg {
+  background: $mc;
+}
+
+.l-mc {
+  color: $light-mc;
+}
+
+.l-mc-bg {
+  background: $light-mc;
+}
+
+.l-gc {
+  color: $light-gray;
+}
+
+.l-gc-bg {
+  background: $light-gray;
+}
+
+.m-gc {
+  color: $mid-gray;
+}
+
+.m-gc-bg {
+  background: $mid-gray;
+}
+
+.d-gc {
+  color: $dark-gray;
+}
+
+.d-gc-bg {
+  background: $dark-gray;
+}
+
+.wc {
+  color: #fff;
+}
+
+.wc-bg {
+  background: #fff;
+}
+
+.dark {
+  color: #1a1a1a;
+}
+
+.dark-bg {
+  background: #1a1a1a;
+}
+
+.l-dark {
+  color: #252525;
+}
+
+.l-dark-bg {
+  background: #252525;
+}
+
+// flex framework
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row-c {
+  @extend .flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-btw {
+  @extend .flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-col {
+  @extend .flex;
+  flex-direction: column;
+}
+
+.flex-col-c {
+  @extend .flex-col;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-end {
+  @extend .flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.align-self-end {
+  align-self: end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.stretch {
+  align-items: stretch;
+}
+
+.wide {
+  width: 100%;
+}
+
+@for $i from 1 through 200 {
+  .gap-#{$i} {
+    gap: #{$i}px;
+  }
+}
+
+// positioning classes
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+// text classes
+
+@for $i from 1 through 30 {
+  .f-#{$i} {
+    font-size: #{$i}px;
+    * {
+      font-size: #{$i}px;
+    }
+  }
+}
+
+@for $i from 1 through 10 {
+  .fw-#{$i} {
+    font-weight: #{$i * 100};
+    * {
+      font-weight: #{$i * 100};
+    }
+  }
+}
+
+.light {
+  font-weight: lighter;
+}
+
+.bold {
+  font-weight: bolder;
+  * {
+    font-weight: bold;
+  }
+}
+
+.h-bold {
+  font-weight: 800;
+  * {
+    font-weight: 800;
+  }
+}
+
+.l-bold {
+  font-weight: 500;
+  * {
+    font-weight: bold;
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+// margin classes
+
+@for $i from 1 through 100 {
+  .mt-#{$i} {
+    margin-top: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mr-#{$i} {
+    margin-right: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mb-#{$i} {
+    margin-bottom: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .ml-#{$i} {
+    margin-left: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mtb-#{$i} {
+    margin-top: #{$i}px;
+    margin-bottom: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mrl-#{$i} {
+    margin-right: #{$i}px;
+    margin-left: #{$i}px;
+  }
+}
+
+// padding classes
+
+@for $i from 1 through 100 {
+  .pdt-#{$i} {
+    padding-top: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pdb-#{$i} {
+    padding-bottom: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pdr-#{$i} {
+    padding-right: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pdl-#{$i} {
+    padding-left: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pdtb-#{$i} {
+    padding-top: #{$i}px;
+    padding-bottom: #{$i}px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pdrl-#{$i} {
+    padding-right: #{$i}px;
+    padding-left: #{$i}px;
+  }
+}
