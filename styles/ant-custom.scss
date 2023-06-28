@@ -1,4 +1,56 @@
+@import '../styles/globals.scss';
+
 .ant-btn {
   height: auto;
   border: 0px;
+}
+.ant-input {
+  height: 50px;
+  background: transparent;
+  padding-left: 12px;
+  border: 1px solid $input-border;
+  font-size: 16px;
+  color: #fff;
+  &::placeholder {
+    color: $dark-gray;
+  }
+  &:hover,
+  &:focus {
+    border-color: $dark-wc;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2.5px rgba($color: $dark-wc, $alpha: 0.3);
+  }
+}
+
+.ant-form {
+  .ant-form-item {
+    .ant-form-item-row {
+      .ant-form-item-label {
+        .ant-form-item-required {
+          &::before {
+            left: 100%;
+            position: absolute;
+            margin-left: 2px;
+          }
+        }
+        label {
+          color: $light-gray;
+          font-weight: 700;
+          margin-bottom: 5px;
+        }
+      }
+      .ant-form-item-control {
+        .ant-form-item-control-input {
+          .ant-input {
+            &.ant-input-status-error {
+              &:hover {
+                border-color: $error;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

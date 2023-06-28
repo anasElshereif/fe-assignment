@@ -1,0 +1,18 @@
+@import '../../styles/globals.scss';
+
+.page-header {
+  .prev-route {
+    margin-left: -16px;
+  }
+  .action-btns {
+    height: 40px;
+    border: 1px solid $border;
+    background-color: $border;
+    .action-btn {
+      height: 100%;
+      width: 100px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+}

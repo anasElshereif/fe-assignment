@@ -3,10 +3,13 @@ $light-mc: #484848;
 $light-gray: #bababa;
 $mid-gray: #989898;
 $dark-gray: #535353;
+$dark-wc: #9a9a9a;
 $dark: #1a1a1a;
 $light-dark: #252525;
 $border: #404040;
+$input-border: #757575;
 $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+$error: #fda29b;
 // colors classes
 
 .mc {
@@ -55,6 +58,14 @@ $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 
 .wc-bg {
   background: #fff;
+}
+
+.d-wc {
+  color: $dark-wc;
+}
+
+.d-wc-bg {
+  background: $dark-wc;
 }
 
 .dark {
@@ -130,6 +141,10 @@ $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .wrap {
@@ -225,6 +240,10 @@ $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   text-decoration: underline;
 }
 
+.pnt {
+  cursor: pointer;
+}
+
 // margin classes
 
 @for $i from 1 through 100 {
@@ -303,4 +322,8 @@ $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     padding-right: #{$i}px;
     padding-left: #{$i}px;
   }
+}
+
+.page {
+  padding: 14px 32px;
 }
