@@ -30,10 +30,34 @@
       gap: 10px;
     }
     &.ant-select-item-option-selected {
-      background: rgba($color: $dark, $alpha: 0.3);
+      background: transparent;
       .ant-select-item-option-content {
         color: #ddd;
       }
+      &:hover {
+        background: rgba($color: $dark, $alpha: 0.3);
+      }
+    }
+    &.selected-user-option {
+      background: rgba($color: $dark, $alpha: 0.3);
+      position: relative;
+      &::before {
+        content: '\2713';
+        color: #ddd;
+        position: absolute;
+        right: 20px;
+      }
+    }
+  }
+}
+
+.selected-users {
+  .selected-user {
+    .user-card {
+      padding: 8px 25px;
+      border: 1px solid $dark-gray;
+      background: $card-bg;
+      flex-grow: 1;
     }
   }
 }

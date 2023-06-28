@@ -110,6 +110,17 @@
             box-shadow: 0 0 0 2.5px rgba($color: $dark-wc, $alpha: 0.3);
           }
         }
+        &.ant-select-status-error {
+          .ant-select-selector {
+            border: 1px solid $error;
+          }
+          &.ant-select-focused,
+          &.ant-select-open {
+            .ant-select-selector {
+              box-shadow: 0 0 0 2.5px rgba($color: $error, $alpha: 0.3);
+            }
+          }
+        }
       }
     }
   }

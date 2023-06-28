@@ -7,6 +7,7 @@ $dark-wc: #9a9a9a;
 $dark: #1a1a1a;
 $light-dark: #252525;
 $border: #404040;
+$card-bg: #353535;
 $input-border: #757575;
 $btn-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 $error: #fda29b;
@@ -254,38 +255,38 @@ $error: #fda29b;
 
 // margin classes
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .mt-#{$i} {
     margin-top: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .mr-#{$i} {
     margin-right: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .mb-#{$i} {
     margin-bottom: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .ml-#{$i} {
     margin-left: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .mtb-#{$i} {
     margin-top: #{$i}px;
     margin-bottom: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .mrl-#{$i} {
     margin-right: #{$i}px;
     margin-left: #{$i}px;
@@ -294,38 +295,38 @@ $error: #fda29b;
 
 // padding classes
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdt-#{$i} {
     padding-top: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdb-#{$i} {
     padding-bottom: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdr-#{$i} {
     padding-right: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdl-#{$i} {
     padding-left: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdtb-#{$i} {
     padding-top: #{$i}px;
     padding-bottom: #{$i}px;
   }
 }
 
-@for $i from 1 through 100 {
+@for $i from 0 through 100 {
   .pdrl-#{$i} {
     padding-right: #{$i}px;
     padding-left: #{$i}px;

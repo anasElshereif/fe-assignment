@@ -18,7 +18,7 @@ export default function SessionForm({ type }) {
   // users
   const [users, setUsers] = useState();
   useEffect(() => {
-    UsersService.GetUsers(0).then((res) => {
+    UsersService.GetUsers().then((res) => {
       const { data } = res;
       setUsers(data);
       setFormSpin(false);
