@@ -163,6 +163,14 @@ $error: #fda29b;
   width: 100%;
 }
 
+.width-50 {
+  width: 50%;
+}
+
+.width-25 {
+  width: 25%;
+}
+
 @for $i from 1 through 200 {
   .gap-#{$i} {
     gap: #{$i}px;
@@ -324,6 +332,12 @@ $error: #fda29b;
   }
 }
 
+// general classes
+
 .page {
   padding: 14px 32px;
+}
+
+.rounded {
+  border-radius: 50%;
 }

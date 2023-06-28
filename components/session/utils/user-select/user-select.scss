@@ -1,0 +1,39 @@
+.users-select-dropdown {
+  .search-input {
+    border: 0px;
+    &::placeholder {
+      color: $mid-gray;
+    }
+  }
+  .user-option,
+  .add-user,
+  .load-more {
+    width: 100%;
+    background: transparent;
+    color: #ddd;
+    height: 50px;
+    @extend .align-center;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 0.5px solid $light-mc;
+    &:hover {
+      background: rgba($color: $dark, $alpha: 0.3);
+    }
+  }
+  .load-more {
+    height: 40px;
+  }
+  .user-option {
+    .ant-select-item-option-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    &.ant-select-item-option-selected {
+      background: rgba($color: $dark, $alpha: 0.3);
+      .ant-select-item-option-content {
+        color: #ddd;
+      }
+    }
+  }
+}
