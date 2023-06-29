@@ -16,9 +16,8 @@ export default function Time() {
     <DatePicker
       className="wide"
       picker="time"
-      use12Hours
-      format="hh:mm A"
-      placeholder="00:00 AM"
+      format="HH:mm"
+      placeholder="00:00 AM" // be endpoint use 24 format
       suffixIcon={<Image src={DropdownIcon} alt="dropdown" />}
     />
   );
@@ -37,6 +36,7 @@ export default function Time() {
       >
         <DatePicker
           className="wide"
+          format="YYYY-MM-DD"
           placeholder="Jan . 01 . 2022"
           disabledDate={disabledDate}
           style={{ width: '355px' }}

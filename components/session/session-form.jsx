@@ -9,10 +9,7 @@ import VenueSelect from './utils/venue/venue';
 
 const { TextArea } = Input;
 
-export default function SessionForm({ type }) {
-  // form state
-  const [, setThumbnailImg] = useState();
-
+export default function SessionForm({ type, thumbnailImg, selectedSpeakers, selectedModerators, resetSelectedUsers }) {
   // fetching users
   const [users, setUsers] = useState();
   useEffect(() => {
@@ -76,7 +73,7 @@ export default function SessionForm({ type }) {
       <Form.Item label="Thumbnail" name="cover_image" className="session-input-item">
         <ThumbnailUploader
           file={(file) => {
-            setThumbnailImg(file);
+            thumbnailImg(file);
           }}
         />
       </Form.Item>
@@ -98,7 +95,7 @@ export default function SessionForm({ type }) {
       <div className="split" />
       <UserSelect
         label="Speaker"
-        name="speaker"
+        name="speaker_ids"
         users={users}
         updateUsers={(newUser) => {
           updateUsers(newUser);
@@ -106,10 +103,14 @@ export default function SessionForm({ type }) {
         updateUsersData={(updatedData) => {
           updateUsersData(updatedData);
         }}
+        updateSelectedUsers={(selectedUsers) => {
+          selectedSpeakers(selectedUsers);
+        }}
+        resetSelectedUsers={resetSelectedUsers}
       />
       <UserSelect
         label="Moderator"
-        name="moderator"
+        name="moderator_ids"
         users={users}
         updateUsers={(newUser) => {
           updateUsers(newUser);
@@ -117,6 +118,10 @@ export default function SessionForm({ type }) {
         updateUsersData={(updatedData) => {
           updateUsersData(updatedData);
         }}
+        updateSelectedUsers={(selectedUsers) => {
+          selectedModerators(selectedUsers);
+        }}
+        resetSelectedUsers={resetSelectedUsers}
       />
       <div className="split" />
       <VenueSelect />

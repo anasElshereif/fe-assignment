@@ -12,7 +12,16 @@ import UsersService from '../../../../services/users/users';
 
 const { Option } = Select;
 
-export default function UserSelect({ label, name, users, selectedUsers, updateUsers, updateUsersData }) {
+export default function UserSelect({
+  label,
+  name,
+  users,
+  selectedUsers,
+  updateUsers,
+  updateUsersData,
+  updateSelectedUsers,
+  resetSelectedUsers,
+}) {
   // users
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
@@ -30,6 +39,17 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
     if (!selectedUsers) return;
     setSelectedUsersArr(selectedUsers); // setting prev selected users in prefilling mode
   }, [selectedUsers]);
+
+  useEffect(() => {
+    if (!selectedUsersArr || selectedUsersArr.length === 0) return;
+    updateSelectedUsers(selectedUsersArr);
+  }, [selectedUsersArr]);
+
+  // reset selected users on form submit
+  useEffect(() => {
+    if (!resetSelectedUsers) return;
+    setSelectedUsersArr([]);
+  }, [resetSelectedUsers]);
 
   const findUser = (userId) => usersOptions.filter((user) => user.id === userId)[0]; // finding user object from users array by id
 
