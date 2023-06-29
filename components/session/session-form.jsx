@@ -1,4 +1,4 @@
-import { Form, Input, Spin } from 'antd';
+import { Form, Input, Spin, message } from 'antd';
 import { useEffect, useState } from 'react';
 import AltTooltip from '../tooltip/tooltip';
 import ThumbnailUploader from './utils/thumbnail/thumbnail';
@@ -10,7 +10,7 @@ const { TextArea } = Input;
 
 export default function SessionForm({ type }) {
   const [addSession] = Form.useForm();
-  const [formSpin, setFormSpin] = useState(false);
+  const [formSpin] = useState(false);
 
   // form state
   const [, setThumbnailImg] = useState();
@@ -18,16 +18,24 @@ export default function SessionForm({ type }) {
   // users
   const [users, setUsers] = useState();
   useEffect(() => {
-    UsersService.GetUsers().then((res) => {
-      const { data } = res;
-      setUsers(data);
-      setFormSpin(false);
-    });
+    UsersService.GetUsers()
+      .then((res) => {
+        const { data } = res;
+        setUsers(data);
+      })
+      .catch(() => {
+        message.error('Error occurred while fetching data');
+      });
   }, []);
 
   // update users
   const updateUsers = (user) => {
     setUsers((prevData) => ({ ...prevData, users: [user, ...prevData.users] }));
+  };
+
+  // update users data
+  const updateUsersData = (usersData) => {
+    setUsers((prevData) => ({ ...usersData, users: [...prevData.users, ...usersData.users] }));
   };
   return (
     <Spin spinning={formSpin}>
@@ -99,6 +107,9 @@ export default function SessionForm({ type }) {
             updateUsers={(newUser) => {
               updateUsers(newUser);
             }}
+            updateUsersData={(updatedData) => {
+              updateUsersData(updatedData);
+            }}
           />
           <UserSelect
             label="Moderator"
@@ -106,6 +117,9 @@ export default function SessionForm({ type }) {
             users={users}
             updateUsers={(newUser) => {
               updateUsers(newUser);
+            }}
+            updateUsersData={(updatedData) => {
+              updateUsersData(updatedData);
             }}
           />
         </Form>

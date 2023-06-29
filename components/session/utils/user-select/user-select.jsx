@@ -8,10 +8,11 @@ import DropdownIcon from '../../../../public/icons/vector.svg';
 import LoadMoreIcon from '../../../../public/icons/reload.svg';
 import DefaultAvatar from '../../../../public/icons/default-user.svg';
 import AddUser from './add-user';
+import UsersService from '../../../../services/users/users';
 
 const { Option } = Select;
 
-export default function UserSelect({ label, name, users, selectedUsers, updateUsers }) {
+export default function UserSelect({ label, name, users, selectedUsers, updateUsers, updateUsersData }) {
   // users
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
@@ -32,8 +33,8 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
 
   const findUser = (userId) => usersOptions.filter((user) => user.id === userId)[0]; // finding user object from users array by id
 
-  const userIsSelected = (userId) => {
-    const result = selectedUsersArr.filter((user) => user.id === userId)[0];
+  const userInArray = (userId, list) => {
+    const result = list.filter((user) => user.id === userId)[0];
     if (result) return true;
     return false;
   }; // user is selected or not
@@ -50,7 +51,7 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
 
   const switchSelectUser = (userId) => {
     if (!usersData) return;
-    const isUserSelected = userIsSelected(userId);
+    const isUserSelected = userInArray(userId, selectedUsersArr);
     if (isUserSelected) {
       unSelectUser(userId);
     } else {
@@ -72,6 +73,24 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
     updateUsers(user);
   }; // pushing new created user to the first of the users array in parent component to pass updated data to all components
 
+  // load more
+  const loadMore = () => {
+    setLoadSpin(true);
+    UsersService.GetUsers(usersData.number)
+      .then((res) => {
+        const { data } = res;
+        const filteredUsers = data.users.filter((user) => !userInArray(user.id, users.users));
+        const filteredData = { ...data, users: [...filteredUsers] };
+        updateUsersData(filteredData);
+      })
+      .catch(() => {
+        message.error('Error occurred while fetching data');
+      })
+      .finally(() => {
+        setLoadSpin(false);
+      });
+  }; // load more function fetches data with offset margin and pass it to parent to update new data in all other user selects. It filters date from duplicates in case user was add at first then loaded again later in load more function
+
   // dropdown render
   const dropdownRender = (menu) => (
     <>
@@ -83,7 +102,7 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
       <Spin spinning={loadSpin}>
         {menu}
         {usersData?.is_last_offset === false && ( // did not use ! to initiate falsy value
-          <button type="button" className="load-more flex-row-c gap-10">
+          <button type="button" className="load-more flex-row-c gap-10" onClick={loadMore}>
             <Image src={LoadMoreIcon} alt="more" width={16} />
             <span>Load more</span>
           </button>
@@ -120,7 +139,7 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
               key={user.id}
               value={user.id}
               label={`${user.first_name} ${user.last_name}`}
-              className={`user-option ${userIsSelected(user.id) && 'selected-user-option'}`}
+              className={`user-option ${userInArray(user.id, selectedUsersArr) && 'selected-user-option'}`}
             >
               <Image
                 src={user.avatar || DefaultAvatar}

@@ -30,7 +30,7 @@
     "sass": "^1.63.6"
   },
   "lint-staged": {
-    "*.{js,ts}": [
+    "*.{jsx,js}": [
       "npm run lint",
       "prettier --write"
     ]
