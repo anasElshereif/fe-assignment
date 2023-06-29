@@ -22,6 +22,7 @@ export default function AddSession() {
     const formattedDate = dayjs(values.date).format('YYYY-MM-DD');
     const formattedFrom = `${values.from.$H}:${values.from.$m}`;
     const formattedTill = `${values.till.$H}:${values.till.$m}`;
+
     const payloadObj = {
       ...values,
       date: formattedDate,
@@ -32,6 +33,7 @@ export default function AddSession() {
 
     delete payloadObj.speaker_ids;
     delete payloadObj.moderator_ids;
+    delete payloadObj.cover_image;
     delete payloadObj.venue; // not allowed in be endpoint
 
     const payload = new FormData();
@@ -50,7 +52,8 @@ export default function AddSession() {
   };
 
   // reset selected users
-  const [resetSelectedUsers, setResetSelectedUsers] = useState(false);
+  const [resetSelectedFields, setResetSelectedFields] = useState(false);
+
   // create session
   const createSession = (values) => {
     setFormSpin(true);
@@ -58,7 +61,7 @@ export default function AddSession() {
     SessionService.CreateSession(payload)
       .then(() => {
         addSession.resetFields();
-        setResetSelectedUsers(true);
+        setResetSelectedFields(true);
         message.success('Successfully created session');
       })
       .catch(() => {
@@ -86,14 +89,14 @@ export default function AddSession() {
               addSession.submit();
             }}
           >
-            Next
+            Create
           </button>
         </div>
       </PageHeader>
       <div className="wide flex-row-c mt-22">
         <Spin spinning={formSpin}>
           <div className="session-form">
-            <Form form={addSession} layout="vertical" onFinish={createSession}>
+            <Form form={addSession} layout="vertical" onFinish={createSession} scrollToFirstError>
               <SessionForm
                 type="add"
                 thumbnailImg={(file) => {
@@ -105,7 +108,8 @@ export default function AddSession() {
                 selectedModerators={(speakers) => {
                   setSelectedModerators(speakers);
                 }}
-                resetSelectedUsers={resetSelectedUsers}
+                resetSelectedUsers={resetSelectedFields}
+                resetSelectedVenue={resetSelectedFields}
               />
             </Form>
           </div>

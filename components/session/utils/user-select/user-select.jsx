@@ -43,7 +43,7 @@ export default function UserSelect({
   useEffect(() => {
     if (!selectedUsersArr || selectedUsersArr.length === 0) return;
     updateSelectedUsers(selectedUsersArr);
-  }, [selectedUsersArr]);
+  }, [selectedUsersArr]); // watcher on selected values passing it to parent form
 
   // reset selected users on form submit
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function UserSelect({
         updateUsersData(filteredData);
       })
       .catch(() => {
-        message.error('Error occurred while fetching data');
+        message.error('Error occurred while fetching users');
       })
       .finally(() => {
         setLoadSpin(false);

@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { message } from 'antd';
 import CancelIcon from '../../public/icons/cancel.svg';
 import EditIcon from '../../public/icons/edit.svg';
 
-export default function ImageUploader({ imageFile, mode, sizeValidation, children }) {
+export default function ImageUploader({ imageFile, mode, sizeValidation, prefilledImage, children }) {
   // uploader elements refs
   const uploadInput = useRef();
   const displayImage = useRef();
@@ -20,7 +20,6 @@ export default function ImageUploader({ imageFile, mode, sizeValidation, childre
     if (status) {
       displayImageContainer.current.classList.add('show');
       setImageFileValue(uploadInput.current.files[0]);
-      message.success('Successfully uploaded image');
     } else {
       displayImageContainer.current.classList.remove('show');
     }
@@ -51,6 +50,7 @@ export default function ImageUploader({ imageFile, mode, sizeValidation, childre
       checkImageSize(validatingImg)
         .then(() => {
           displayImage.current.src = src;
+          message.success('Successfully uploaded image');
           controlImageContainer(true);
         })
         .catch((error) => {
@@ -94,6 +94,12 @@ export default function ImageUploader({ imageFile, mode, sizeValidation, childre
     uploadInput.current.click();
   };
 
+  // prefilled image setter
+  useEffect(() => {
+    if (!prefilledImage) return;
+    displayImageContainer.current.classList.add('show');
+    displayImage.current.src = prefilledImage;
+  }, [prefilledImage]);
   return (
     <section className={`flex-row-c m-gc upload-container ${mode}`}>
       <label htmlFor="upload-input" className="flex-col-c f-14 center upload-label">

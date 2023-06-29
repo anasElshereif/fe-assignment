@@ -9,7 +9,15 @@ import VenueSelect from './utils/venue/venue';
 
 const { TextArea } = Input;
 
-export default function SessionForm({ type, thumbnailImg, selectedSpeakers, selectedModerators, resetSelectedUsers }) {
+export default function SessionForm({
+  type,
+  thumbnailImg,
+  selectedSpeakers,
+  selectedModerators,
+  resetSelectedUsers,
+  resetSelectedVenue,
+  prefilledData,
+}) {
   // fetching users
   const [users, setUsers] = useState();
   useEffect(() => {
@@ -19,7 +27,7 @@ export default function SessionForm({ type, thumbnailImg, selectedSpeakers, sele
         setUsers(data);
       })
       .catch(() => {
-        message.error('Error occurred while fetching data');
+        message.error('Error occurred while fetching users');
       });
   }, []);
 
@@ -75,6 +83,7 @@ export default function SessionForm({ type, thumbnailImg, selectedSpeakers, sele
           file={(file) => {
             thumbnailImg(file);
           }}
+          prefilledImage={prefilledData?.cover_image}
         />
       </Form.Item>
       {/* time row */}
@@ -107,6 +116,7 @@ export default function SessionForm({ type, thumbnailImg, selectedSpeakers, sele
           selectedSpeakers(selectedUsers);
         }}
         resetSelectedUsers={resetSelectedUsers}
+        selectedUsers={prefilledData?.speakers}
       />
       <UserSelect
         label="Moderator"
@@ -122,9 +132,10 @@ export default function SessionForm({ type, thumbnailImg, selectedSpeakers, sele
           selectedModerators(selectedUsers);
         }}
         resetSelectedUsers={resetSelectedUsers}
+        selectedUsers={prefilledData?.moderators}
       />
       <div className="split" />
-      <VenueSelect />
+      <VenueSelect prefilledVenue={prefilledData?.venue} resetSelectedVenue={resetSelectedVenue} />
     </>
   );
 }

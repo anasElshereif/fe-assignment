@@ -18,13 +18,16 @@ export default function AddUser({ close, open, label, pushUser }) {
 
   // create user be wiring
   const createUser = (values) => {
+    // const valuesArr = values;
+    // delete valuesArr.image;
     // const payload = new FormData();
     // payload.append('event_id', 8);
     // payload.append('image', avatarImg);
-    // const valuesObjKeys = Object.keys(values);
+    // const valuesObjKeys = Object.keys(valuesArr);
     // valuesObjKeys.forEach((value) => {
-    //   payload.append(value, values[value]);
-    // });  ---------- be endpoint is not accepting file. in normal case we use form data to append files
+    //   payload.append(value, valuesArr[value]);
+    // });
+    // ---------- be endpoint is not accepting file.in normal case we use form data to append files
     if (avatarImg) console.log(avatarImg); // this is the file that should be appended to form data in case be endpoint accept it
 
     setFormSpin(true);
