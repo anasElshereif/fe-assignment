@@ -10,7 +10,7 @@ export default function SelectedUsers({ selectedUsers, label, unSelectedUser }) 
   return (
     <section className="mt-10 flex-col gap-5 selected-users">
       {selectedUsers?.map((user) => (
-        <div className="flex align-center gap-10 selected-user">
+        <div className="flex align-center gap-10 selected-user" key={user.id}>
           <div className="user-card flex gap-10 align-center">
             <Image
               src={user.avatar || DefaultAvatar}

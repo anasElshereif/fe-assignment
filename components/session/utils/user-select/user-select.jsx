@@ -7,6 +7,7 @@ import AddIcon from '../../../../public/icons/gray-add.svg';
 import DropdownIcon from '../../../../public/icons/vector.svg';
 import LoadMoreIcon from '../../../../public/icons/reload.svg';
 import DefaultAvatar from '../../../../public/icons/default-user.svg';
+import AddUser from './add-user';
 
 const { Option } = Select;
 
@@ -55,12 +56,21 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
     }
   }; // add user object to selected array if it not already selected and remove it if it is selected
 
+  // add user
+  const [openAddUser, setOpenAddUser] = useState(false);
+  const switchAddUser = (type) => {
+    if (type === 'close') {
+      setOpenAddUser(false);
+      return;
+    }
+    setOpenAddUser((current) => !current);
+  };
   // dropdown render
   const dropdownRender = (menu) => (
     <>
       <UserSearch />
-      <button type="button" className="add-user flex-row-btw">
-        <span>Add new speaker</span>
+      <button type="button" className="add-user flex-row-btw" onClick={switchAddUser}>
+        <span>Add new {label}</span>
         <Image src={AddIcon} alt="add" />
       </button>
       <Spin spinning={loadSpin}>
@@ -128,6 +138,13 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
           }}
         />
       )}
+      <AddUser
+        open={openAddUser}
+        label={label}
+        close={() => {
+          switchAddUser('close');
+        }}
+      />
     </div>
   );
 }

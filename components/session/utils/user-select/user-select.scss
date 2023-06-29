@@ -49,6 +49,9 @@
       }
     }
   }
+  .ant-empty-description {
+    color: #ddd;
+  }
 }
 
 .selected-users {
@@ -58,6 +61,38 @@
       border: 1px solid $dark-gray;
       background: $card-bg;
       flex-grow: 1;
+    }
+  }
+}
+
+.add-user {
+  position: relative;
+  z-index: 9;
+  .add-user-body {
+    .ant-modal-content {
+      border: 1px solid $border;
+      background: $light-dark;
+      padding: 0px;
+      .add-user-container {
+        padding: 30px;
+        padding-bottom: 40px;
+        .session-input-item {
+          margin-bottom: 20px;
+        }
+        .modal-actions-btns {
+          .modal-actions-btn {
+            height: 48px;
+            font-weight: 600;
+            &.cancel {
+              border: 1px solid #2d2d2d;
+              background: #2d2d2d;
+            }
+            &.add {
+              box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            }
+          }
+        }
+      }
     }
   }
 }
