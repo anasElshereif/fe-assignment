@@ -30,3 +30,37 @@
     background-color: $light-mc;
   }
 }
+
+.venue-select-dropdown {
+  .ant-select-item {
+    width: 100%;
+    background: transparent;
+    color: #ddd;
+    height: 50px;
+    padding-left: 20px;
+    @extend .align-center;
+    padding-right: 20px;
+    border-top: 0.5px solid $light-mc;
+    &:hover {
+      background: rgba($color: $dark, $alpha: 0.3);
+    }
+    &.ant-select-item-option-selected {
+      background: $dark;
+      .ant-select-item-option-content {
+        color: #ddd;
+      }
+      &:hover {
+        background: rgba($color: $dark, $alpha: 0.3);
+      }
+    }
+  }
+}
+
+.venue-card {
+  width: 100%;
+  background: #3c3c3c;
+  height: 85px;
+  .content {
+    padding: 20px;
+  }
+}

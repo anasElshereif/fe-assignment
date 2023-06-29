@@ -89,7 +89,7 @@ export default function UserSelect({ label, name, users, selectedUsers, updateUs
       .finally(() => {
         setLoadSpin(false);
       });
-  }; // load more function fetches data with offset margin and pass it to parent to update new data in all other user selects. It filters date from duplicates in case user was add at first then loaded again later in load more function
+  }; // load more function fetches data with offset margin and pass it to parent to update new data in all other user selects. It filters date from duplicates in case user was added at first then loaded again later in load more function
 
   // dropdown render
   const dropdownRender = (menu) => (
