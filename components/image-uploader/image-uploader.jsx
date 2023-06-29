@@ -4,8 +4,8 @@ import { message } from 'antd';
 import CancelIcon from '../../public/icons/cancel.svg';
 import EditIcon from '../../public/icons/edit.svg';
 
-export default function ImageUploader({ imageFile, cmpType, sizeValidation, children }) {
-  // uploader elements
+export default function ImageUploader({ imageFile, mode, sizeValidation, children }) {
+  // uploader elements refs
   const uploadInput = useRef();
   const displayImage = useRef();
   const displayImageContainer = useRef();
@@ -20,23 +20,43 @@ export default function ImageUploader({ imageFile, cmpType, sizeValidation, chil
     if (status) {
       displayImageContainer.current.classList.add('show');
       setImageFileValue(uploadInput.current.files[0]);
+      message.success('Successfully uploaded image');
     } else {
       displayImageContainer.current.classList.remove('show');
     }
   };
 
-  // checking size of upload image
-  const checkImageSize = () => {
-    const { width } = displayImage.current;
-    const { height } = displayImage.current;
-    if (width > sizeValidation?.width || height > sizeValidation?.height) {
-      // Image size error
-      message.error('Image dimensions should be less than or equal to 800px x 400px');
-      controlImageContainer(false);
-      return false;
-    }
-    controlImageContainer(true);
-    return true;
+  // checking size of uploaded image
+  const checkImageSize = (img) =>
+    new Promise((resolve, reject) => {
+      const { width } = img;
+      const { height } = img;
+      const { width: validWidth } = sizeValidation;
+      const { height: validHeight } = sizeValidation;
+      if (width > validWidth || height > validHeight) {
+        const errorMessage = `Image dimensions should be less than or equal to ${validWidth}px x ${validHeight}px`;
+        // Reject the promise with the error message
+        reject(new Error(errorMessage));
+      } else {
+        // Resolve the promise
+        resolve();
+      }
+    });
+
+  // image src setter
+  const imagSetter = (src) => {
+    const validatingImg = document.createElement('img'); // creating image in the dom to validate dimensions
+    validatingImg.src = src;
+    validatingImg.addEventListener('load', () => {
+      checkImageSize(validatingImg)
+        .then(() => {
+          displayImage.current.src = src;
+          controlImageContainer(true);
+        })
+        .catch((error) => {
+          message.error(error.message);
+        });
+    });
   };
 
   // rendering image file
@@ -50,9 +70,8 @@ export default function ImageUploader({ imageFile, cmpType, sizeValidation, chil
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      // image src setter
-      displayImage.current.src = reader.result;
-      return reader.result;
+      const readerResult = reader.result;
+      imagSetter(readerResult);
     };
     return true;
   };
@@ -76,7 +95,7 @@ export default function ImageUploader({ imageFile, cmpType, sizeValidation, chil
   };
 
   return (
-    <section className={`flex-row-c m-gc upload-container ${cmpType}`}>
+    <section className={`flex-row-c m-gc upload-container ${mode}`}>
       <label htmlFor="upload-input" className="flex-col-c f-14 center upload-label">
         <input
           type="file"
@@ -95,7 +114,7 @@ export default function ImageUploader({ imageFile, cmpType, sizeValidation, chil
             id="display-image"
             className="display-image"
             alt="thumbnail"
-            onLoad={checkImageSize}
+            // onLoad={checkImageSize}
           />
           <div className="flex gap-5 uploader-btns">
             <button type="button" className="uploader-btn" onClick={cancelUpload}>

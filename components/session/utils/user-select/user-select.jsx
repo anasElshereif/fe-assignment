@@ -1,6 +1,7 @@
-import { Select, Form, Input, Spin, message } from 'antd';
+import { Select, Form, Spin, message } from 'antd';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import UserSearch from './user-search';
 import SelectedUsers from './selected-users';
 import AddIcon from '../../../../public/icons/gray-add.svg';
 import DropdownIcon from '../../../../public/icons/vector.svg';
@@ -10,15 +11,8 @@ import DefaultAvatar from '../../../../public/icons/default-user.svg';
 const { Option } = Select;
 
 export default function UserSelect({ label, name, users, selectedUsers }) {
-  // search input
-  const [searchValue, setSearchValue] = useState();
-  const searchRef = useRef(null);
-  const changeSearchValue = (e) => {
-    setSearchValue(e.target.value);
-  };
-
   // users
-  const [loadSpin, setLoadSpin] = useState(false);
+  const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
   useEffect(() => {
     if (!users) return;
@@ -27,7 +21,6 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
   }, [users]);
 
   // selected users
-
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
     if (!selectedUsers) return;
@@ -44,30 +37,28 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
 
   const unSelectUser = (userId) => {
     setSelectedUsersArr(selectedUsersArr.filter((user) => user.id !== userId));
-  };
+    message.success(`Successfully removed user from ${label}s`);
+  }; // remove user from selected list
+
+  const selectUser = (userId) => {
+    setSelectedUsersArr((prevSelected) => [...prevSelected, findUser(userId)]);
+    message.success(`Successfully added user to ${label}s`);
+  }; // add user to selected list
 
   const switchSelectUser = (userId) => {
     if (!usersData) return;
     const isUserSelected = userIsSelected(userId);
     if (isUserSelected) {
       unSelectUser(userId);
-      message.success(`Successfully removed user from ${label}s`);
     } else {
-      setSelectedUsersArr((prevSelected) => [...prevSelected, findUser(userId)]);
-      message.success(`Successfully added user to ${label}s`);
+      selectUser(userId);
     }
   }; // add user object to selected array if it not already selected and remove it if it is selected
 
   // dropdown render
   const dropdownRender = (menu) => (
     <>
-      <Input
-        placeholder="Search.."
-        ref={searchRef}
-        value={searchValue}
-        onChange={changeSearchValue}
-        className="search-input"
-      />
+      <UserSearch />
       <button type="button" className="add-user flex-row-btw">
         <span>Add new speaker</span>
         <Image src={AddIcon} alt="add" />
@@ -128,7 +119,7 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
           ))}
         </Select>
       </Form.Item>
-      {selectedUsersArr && (
+      {selectedUsersArr?.length > 0 && (
         <SelectedUsers
           selectedUsers={selectedUsersArr}
           label={label}

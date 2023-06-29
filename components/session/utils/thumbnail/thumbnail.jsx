@@ -8,7 +8,7 @@ export default function ThumbnailUploader({ file }) {
       imageFile={(imgFile) => {
         file(imgFile);
       }}
-      cmpType="thumbnail"
+      mode="thumbnail"
       sizeValidation={{ width: 800, height: 400 }}
     >
       <Image src={UploadIcon} alt="upload" />

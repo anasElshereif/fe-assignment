@@ -88,6 +88,7 @@ export default function SessionForm({ type }) {
           </Form.Item>
           <div className="split" />
           <UserSelect label="Speaker" name="speaker" users={users} />
+          <UserSelect label="Moderator" name="moderator" users={users} />
         </Form>
       </div>
     </Spin>
