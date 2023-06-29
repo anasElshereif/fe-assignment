@@ -1,8 +1,9 @@
-import { Modal, Form, Spin, Input } from 'antd';
+import { Modal, Form, Spin, Input, message } from 'antd';
 import { useState } from 'react';
 import AvatarUploader from '../avatar/avatar';
+import UsersService from '../../../../services/users/users';
 
-export default function AddUser({ close, open, label }) {
+export default function AddUser({ close, open, label, pushUser }) {
   // close modal
   const closeModal = () => {
     close();
@@ -10,10 +11,46 @@ export default function AddUser({ close, open, label }) {
 
   // add user form
   const [addUser] = Form.useForm();
-  const [formSpin] = useState(false);
+  const [formSpin, setFormSpin] = useState(false);
 
   // form state
-  const [, setAvatarImg] = useState();
+  const [avatarImg, setAvatarImg] = useState();
+
+  // create user be wiring
+  const createUser = (values) => {
+    // const payload = new FormData();
+    // payload.append('event_id', 8);
+    // payload.append('image', avatarImg);
+    // const valuesObjKeys = Object.keys(values);
+    // valuesObjKeys.forEach((value) => {
+    //   payload.append(value, values[value]);
+    // });  ---------- be endpoint is not accepting file. in normal case we use form data to append files
+    if (avatarImg) console.log(avatarImg); // this is the file that should be appended to form data in case be endpoint accept it
+
+    setFormSpin(true);
+    const payload = { ...values, event_id: 8 };
+    UsersService.CreateUser(payload)
+      .then((res) => {
+        const user = res.data;
+        pushUser(user);
+        addUser.resetFields();
+        closeModal();
+        message.success('User successfully added');
+      })
+      .catch((error) => {
+        // looping on each error message in every field
+        const errorObj = error.response?.data;
+        if (!errorObj) return;
+        const errObjKeys = Object.keys(errorObj);
+        for (let index = 0; index < errObjKeys.length; index += 1) {
+          errorObj[errObjKeys[index]].map((msg) => message.error(`${errObjKeys[index]} ${msg}`));
+        }
+        addUser.resetFields(['email']);
+      })
+      .finally(() => {
+        setFormSpin(false);
+      });
+  };
   return (
     <Modal
       open={open}
@@ -27,7 +64,7 @@ export default function AddUser({ close, open, label }) {
       <Spin spinning={formSpin}>
         <div className="add-user-container">
           <h2 className="wc f-20 fw-7 mb-30">Add {label}</h2>
-          <Form form={addUser} layout="vertical">
+          <Form form={addUser} layout="vertical" onFinish={createUser}>
             <Form.Item label="Photo" name="image" className="session-input-item">
               <AvatarUploader
                 file={(file) => {
@@ -66,6 +103,10 @@ export default function AddUser({ close, open, label }) {
               name="email"
               rules={[
                 {
+                  required: true, // it not required in figma design but required in be endpoint
+                  message: 'Please input email !',
+                },
+                {
                   type: 'email',
                   message: 'Please input a valid email !',
                 },
@@ -78,7 +119,7 @@ export default function AddUser({ close, open, label }) {
               <button type="button" className="width-50 modal-actions-btn cancel wc" onClick={closeModal}>
                 Cancel
               </button>
-              <button type="button" className="width-50 modal-actions-btn add l-dark wc-bg">
+              <button type="submit" className="width-50 modal-actions-btn add l-dark wc-bg">
                 Add
               </button>
             </div>

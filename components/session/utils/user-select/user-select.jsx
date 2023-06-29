@@ -15,9 +15,11 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
   // users
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
+  const [usersOptions, setUsersOptions] = useState();
   useEffect(() => {
     if (!users) return;
     setUsersData(users);
+    setUsersOptions(users.users);
     setLoadSpin(false);
   }, [users]);
 
@@ -28,7 +30,7 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
     setSelectedUsersArr(selectedUsers); // setting prev selected users in prefilling mode
   }, [selectedUsers]);
 
-  const findUser = (userId) => usersData.users.filter((user) => user.id === userId)[0]; // finding user object from users array by id
+  const findUser = (userId) => usersOptions.filter((user) => user.id === userId)[0]; // finding user object from users array by id
 
   const userIsSelected = (userId) => {
     const result = selectedUsersArr.filter((user) => user.id === userId)[0];
@@ -65,6 +67,11 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
     }
     setOpenAddUser((current) => !current);
   };
+
+  const pushNewUser = (user) => {
+    setUsersOptions((prevUsers) => [user, ...prevUsers]);
+  }; // pushing new created user to the first of the users array
+
   // dropdown render
   const dropdownRender = (menu) => (
     <>
@@ -108,7 +115,7 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
             switchSelectUser(value);
           }}
         >
-          {usersData?.users?.map((user) => (
+          {usersOptions?.map((user) => (
             <Option
               key={user.id}
               value={user.id}
@@ -143,6 +150,9 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
         label={label}
         close={() => {
           switchAddUser('close');
+        }}
+        pushUser={(user) => {
+          pushNewUser(user);
         }}
       />
     </div>
