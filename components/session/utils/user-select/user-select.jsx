@@ -11,7 +11,7 @@ import AddUser from './add-user';
 
 const { Option } = Select;
 
-export default function UserSelect({ label, name, users, selectedUsers }) {
+export default function UserSelect({ label, name, users, selectedUsers, updateUsers }) {
   // users
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
@@ -69,8 +69,8 @@ export default function UserSelect({ label, name, users, selectedUsers }) {
   };
 
   const pushNewUser = (user) => {
-    setUsersOptions((prevUsers) => [user, ...prevUsers]);
-  }; // pushing new created user to the first of the users array
+    updateUsers(user);
+  }; // pushing new created user to the first of the users array in parent component to pass updated data to all components
 
   // dropdown render
   const dropdownRender = (menu) => (

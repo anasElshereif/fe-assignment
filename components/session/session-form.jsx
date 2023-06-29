@@ -24,6 +24,11 @@ export default function SessionForm({ type }) {
       setFormSpin(false);
     });
   }, []);
+
+  // update users
+  const updateUsers = (user) => {
+    setUsers((prevData) => ({ ...prevData, users: [user, ...prevData.users] }));
+  };
   return (
     <Spin spinning={formSpin}>
       <div className="session-form">
@@ -87,8 +92,22 @@ export default function SessionForm({ type }) {
             <TextArea placeholder="Type details" className="text-area" />
           </Form.Item>
           <div className="split" />
-          <UserSelect label="Speaker" name="speaker" users={users} />
-          <UserSelect label="Moderator" name="moderator" users={users} />
+          <UserSelect
+            label="Speaker"
+            name="speaker"
+            users={users}
+            updateUsers={(newUser) => {
+              updateUsers(newUser);
+            }}
+          />
+          <UserSelect
+            label="Moderator"
+            name="moderator"
+            users={users}
+            updateUsers={(newUser) => {
+              updateUsers(newUser);
+            }}
+          />
         </Form>
       </div>
     </Spin>
