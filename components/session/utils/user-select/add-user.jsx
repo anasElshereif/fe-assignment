@@ -14,7 +14,6 @@ export default function AddUser({ close, open, label }) {
 
   // form state
   const [, setAvatarImg] = useState();
-
   return (
     <Modal
       open={open}
