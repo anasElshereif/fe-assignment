@@ -14,6 +14,7 @@ export default function AddSession() {
   const [thumbnailImg, setThumbnailImg] = useState();
   const [selectedSpeakers, setSelectedSpeakers] = useState();
   const [selectedModerators, setSelectedModerators] = useState();
+
   // get ids array from users array
   const getUsersIds = (list) => list.map((item) => item.id);
 
@@ -110,6 +111,9 @@ export default function AddSession() {
                 }}
                 resetSelectedUsers={resetSelectedFields}
                 resetSelectedVenue={resetSelectedFields}
+                resetFieldOnEmpty={(value) => {
+                  addSession.resetFields([value]);
+                }}
               />
             </Form>
           </div>

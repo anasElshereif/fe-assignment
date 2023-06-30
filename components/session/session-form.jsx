@@ -15,6 +15,7 @@ export default function SessionForm({
   selectedSpeakers,
   selectedModerators,
   resetSelectedUsers,
+  resetFieldOnEmpty,
   resetSelectedVenue,
   prefilledData,
 }) {
@@ -31,8 +32,8 @@ export default function SessionForm({
       });
   }, []);
 
-  // update users options
-  const updateUsers = (user) => {
+  // update users options pushing new user
+  const addUsers = (user) => {
     setUsers((prevData) => ({ ...prevData, users: [user, ...prevData.users] }));
   };
 
@@ -111,14 +112,15 @@ export default function SessionForm({
         label="Speaker"
         name="speaker_ids"
         users={users}
-        updateUsers={(newUser) => {
-          updateUsers(newUser);
+        addUsers={(newUser) => {
+          addUsers(newUser);
         }}
         updateUsersData={(updatedData) => {
           updateUsersData(updatedData);
         }}
         updateSelectedUsers={(selectedUsers) => {
           selectedSpeakers(selectedUsers);
+          if (selectedUsers.length === 0) resetFieldOnEmpty('speaker_ids');
         }}
         resetSelectedUsers={resetSelectedUsers}
         selectedUsers={prefilledData?.speakers}
@@ -128,14 +130,15 @@ export default function SessionForm({
         label="Moderator"
         name="moderator_ids"
         users={users}
-        updateUsers={(newUser) => {
-          updateUsers(newUser);
+        addUsers={(newUser) => {
+          addUsers(newUser);
         }}
         updateUsersData={(updatedData) => {
           updateUsersData(updatedData);
         }}
         updateSelectedUsers={(selectedUsers) => {
           selectedModerators(selectedUsers);
+          if (selectedUsers.length === 0) resetFieldOnEmpty('moderator_ids');
         }}
         resetSelectedUsers={resetSelectedUsers}
         selectedUsers={prefilledData?.moderators}

@@ -17,15 +17,19 @@ export default function UserSelect({
   name,
   users,
   selectedUsers,
-  updateUsers,
+  addUsers,
   updateUsersData,
   updateSelectedUsers,
   resetSelectedUsers,
 }) {
-  // users
+  // users state
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
   const [usersOptions, setUsersOptions] = useState();
+  const [holder, setHolder] = useState(true);
+  useEffect(() => {
+    setHolder(false);
+  }, []);
 
   // selected users
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
@@ -35,9 +39,9 @@ export default function UserSelect({
   }, [selectedUsers]);
 
   useEffect(() => {
-    if (!selectedUsersArr || selectedUsersArr.length === 0) return;
+    if (holder) return;
     updateSelectedUsers(selectedUsersArr);
-  }, [selectedUsersArr]); // watcher on selected values passing it to parent form
+  }, [selectedUsersArr]); // update selected values passing it to parent form
 
   // reset selected users on form submit
   useEffect(() => {
@@ -54,7 +58,8 @@ export default function UserSelect({
   }; // user is selected or not
 
   const unSelectUser = (userId) => {
-    setSelectedUsersArr(selectedUsersArr.filter((user) => user.id !== userId));
+    const updatedValues = selectedUsersArr.filter((user) => user.id !== userId);
+    setSelectedUsersArr(updatedValues);
     message.success(`Successfully removed user from ${label}s`);
   }; // remove user from selected list
 
@@ -84,7 +89,7 @@ export default function UserSelect({
   };
 
   const pushNewUser = (user) => {
-    updateUsers(user);
+    addUsers(user);
   }; // pushing new created user to the first of the users array in parent component to pass updated data to all components
 
   // load more
@@ -104,7 +109,6 @@ export default function UserSelect({
             ...filteredData,
             users: [...prevData.users, ...filteredData.users],
           }));
-          console.log(usersOptions, filteredUsers, filteredData, data.users, users);
           setUsersOptions((prevUsers) => [...prevUsers, ...filteredUsers]);
         })
         .catch(() => {
@@ -155,9 +159,6 @@ export default function UserSelect({
     }
   }, [searchResult]);
 
-  useEffect(() => {
-    console.log(usersOptions);
-  }, [usersOptions]);
   // dropdown render
   const dropdownRender = (menu) => (
     <>
