@@ -26,12 +26,6 @@ export default function UserSelect({
   const [loadSpin, setLoadSpin] = useState(true);
   const [usersData, setUsersData] = useState();
   const [usersOptions, setUsersOptions] = useState();
-  useEffect(() => {
-    if (!users) return;
-    setUsersData(users);
-    setUsersOptions(users.users);
-    setLoadSpin(false);
-  }, [users]);
 
   // selected users
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
@@ -94,27 +88,94 @@ export default function UserSelect({
   }; // pushing new created user to the first of the users array in parent component to pass updated data to all components
 
   // load more
+  const [preservedFilteredData, setPreservedFilteredData] = useState();
+  const [searchQuery, setSearchQuery] = useState();
+  const [searchResult, setSearchResult] = useState();
+
   const loadMore = () => {
     setLoadSpin(true);
-    UsersService.GetUsers(usersData.number)
-      .then((res) => {
-        const { data } = res;
-        const filteredUsers = data.users.filter((user) => !userInArray(user.id, users.users));
-        const filteredData = { ...data, users: [...filteredUsers] };
-        updateUsersData(filteredData);
-      })
-      .catch(() => {
-        message.error('Error occurred while fetching users');
-      })
-      .finally(() => {
-        setLoadSpin(false);
-      });
+    if (searchQuery && searchQuery.length > 0) {
+      UsersService.SearchUsers(searchQuery, usersData.number)
+        .then((res) => {
+          const { data } = res;
+          const filteredUsers = data.users.filter((user) => !userInArray(user.id, usersOptions));
+          const filteredData = { ...data, users: [...filteredUsers] };
+          setUsersData((prevData) => ({
+            ...filteredData,
+            users: [...prevData.users, ...filteredData.users],
+          }));
+          console.log(usersOptions, filteredUsers, filteredData, data.users, users);
+          setUsersOptions((prevUsers) => [...prevUsers, ...filteredUsers]);
+        })
+        .catch(() => {
+          message.error('Error occurred while searching');
+        })
+        .finally(() => {
+          setLoadSpin(false);
+        });
+    } else {
+      UsersService.GetUsers(usersData.number)
+        .then((res) => {
+          const { data } = res;
+          const filteredUsers = data.users.filter((user) => !userInArray(user.id, users.users));
+          const filteredData = { ...data, users: [...filteredUsers] };
+          setPreservedFilteredData(filteredData);
+          updateUsersData(filteredData);
+        })
+        .catch(() => {
+          message.error('Error occurred while fetching users');
+        })
+        .finally(() => {
+          setLoadSpin(false);
+        });
+    }
   }; // load more function fetches data with offset margin and pass it to parent to update new data in all other user selects. It filters date from duplicates in case user was added at first then loaded again later in load more function
 
+  // search
+  useEffect(() => {
+    if (!users) return;
+    if (searchQuery && searchQuery.length > 0) return;
+    setUsersData(users);
+    setUsersOptions(users.users);
+  }, [users, searchQuery]);
+
+  useEffect(() => {
+    if (!users) return;
+    setLoadSpin(false);
+  }, [users]);
+
+  useEffect(() => {
+    if (searchResult && searchResult.count > 0) {
+      setUsersData(searchResult);
+      setUsersOptions(searchResult.users);
+    } else {
+      if (!preservedFilteredData) return;
+      setUsersData({});
+      updateUsersData({ ...preservedFilteredData, preserve: true }); // to preserve and restore old users after search is empty
+    }
+  }, [searchResult]);
+
+  useEffect(() => {
+    console.log(usersOptions);
+  }, [usersOptions]);
   // dropdown render
   const dropdownRender = (menu) => (
     <>
-      <UserSearch />
+      <UserSearch
+        searchQuery={(query) => {
+          setSearchQuery(query);
+        }}
+        searchResult={(result) => {
+          setSearchResult(result);
+          if (result.users.length === 0 && result.searchQuery.length !== 0) {
+            setUsersData((preserved) => ({ ...preserved, users: [] }));
+            setUsersOptions([]);
+          }
+        }}
+        loading={(loading) => {
+          setLoadSpin(loading);
+        }}
+      />
       <button type="button" className="add-user flex-row-btw" onClick={switchAddUser}>
         <span>Add new {label}</span>
         <Image src={AddIcon} alt="add" />

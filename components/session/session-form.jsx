@@ -38,6 +38,10 @@ export default function SessionForm({
 
   // update users data
   const updateUsersData = (usersData) => {
+    if (usersData.preserve) {
+      setUsers((prevData) => ({ ...usersData, users: [...prevData.users] }));
+      return;
+    }
     setUsers((prevData) => ({ ...usersData, users: [...prevData.users, ...usersData.users] }));
   };
   return (
@@ -102,6 +106,7 @@ export default function SessionForm({
         <TextArea placeholder="Type details" className="text-area" />
       </Form.Item>
       <div className="split" />
+
       <UserSelect
         label="Speaker"
         name="speaker_ids"
@@ -118,6 +123,7 @@ export default function SessionForm({
         resetSelectedUsers={resetSelectedUsers}
         selectedUsers={prefilledData?.speakers}
       />
+
       <UserSelect
         label="Moderator"
         name="moderator_ids"
@@ -134,6 +140,7 @@ export default function SessionForm({
         resetSelectedUsers={resetSelectedUsers}
         selectedUsers={prefilledData?.moderators}
       />
+
       <div className="split" />
       <VenueSelect prefilledVenue={prefilledData?.venue} resetSelectedVenue={resetSelectedVenue} />
     </>

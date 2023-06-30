@@ -1,24 +1,40 @@
-import { Input } from 'antd';
-import { useState } from 'react';
+import { Input, message } from 'antd';
+import { useState, useEffect } from 'react';
+import UsersService from '../../../../services/users/users';
 
-export default function UserSearch() {
+export default function UserSearch({ searchQuery, searchResult, offset, loading }) {
   // search input
   const [searchValue, setSearchValue] = useState();
+  const [holder, setHolder] = useState(true);
+
   const changeSearchValue = (e) => {
+    if (setHolder) setHolder(false);
     setSearchValue(e.target.value);
+    loading(true);
   };
-  // useEffect(() => {
-  //   if (!searchValue || searchValue?.length === 0) return undefined;
-  //   const timeOutId = setTimeout(() => {
-  //     UsersService.SearchUsers(searchValue)
-  //       .then((res) => {
-  //         console.log(res);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }, 1000);
-  //   return () => clearTimeout(timeOutId);
-  // }, [searchValue]);
+
+  useEffect(() => {
+    if (holder) return;
+    searchQuery(searchValue);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (holder) return undefined; // to prevent useEffect from fetching data in first render
+    const timeOutId = setTimeout(() => {
+      UsersService.SearchUsers(searchValue, offset)
+        .then((res) => {
+          searchResult(res.data);
+        })
+        .catch(() => {
+          message.error('Error occurred while searching');
+        })
+        .finally(() => {
+          loading(false);
+        });
+    }, 1000); // time out to deffer search request with controlled time => can use useDeferredValue hock instead but it does not give time control
+    return () => clearTimeout(timeOutId);
+  }, [searchValue]);
+  // be endpoint throws 500 (internal server error)
+
   return <Input placeholder="Search.." value={searchValue} onChange={changeSearchValue} className="search-input" />;
 }
