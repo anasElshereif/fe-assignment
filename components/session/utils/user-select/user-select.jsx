@@ -168,7 +168,7 @@ export default function UserSelect({
         }}
         searchResult={(result) => {
           setSearchResult(result);
-          if (result.users.length === 0 && result.searchQuery.length !== 0) {
+          if (result.users.length === 0) {
             setUsersData((preserved) => ({ ...preserved, users: [] }));
             setUsersOptions([]);
           }
