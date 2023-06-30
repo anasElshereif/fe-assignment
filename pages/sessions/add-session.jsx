@@ -93,7 +93,7 @@ export default function AddSession() {
           </button>
         </div>
       </PageHeader>
-      <div className="wide flex-row-c mt-22">
+      <div className="wide flex-row-c mt-22 mb-40">
         <Spin spinning={formSpin}>
           <div className="session-form">
             <Form form={addSession} layout="vertical" onFinish={createSession} scrollToFirstError>

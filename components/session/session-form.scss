@@ -29,6 +29,40 @@
     height: 1px;
     background-color: $light-mc;
   }
+  .time-container {
+    .date-picker {
+      .picker {
+        width: 355px;
+      }
+    }
+  }
+  @media (max-width: 840px) {
+    width: 100%;
+    .time-container {
+      flex-wrap: wrap;
+      gap: 20px;
+      row-gap: 0px;
+      .date-picker {
+        width: 100%;
+        .picker {
+          width: 100%;
+        }
+      }
+      .time-picker {
+        width: calc(50% - 10px);
+      }
+    }
+  }
+  @media (max-width: 520px) {
+    padding: 20px;
+    padding-bottom: 30px;
+    .session-input-item {
+      margin-bottom: 20px;
+    }
+    .split {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .venue-select-dropdown {
@@ -62,5 +96,14 @@
   height: 85px;
   .content {
     padding: 20px;
+    @media (max-width: 520px) {
+      padding: 10px;
+    }
+  }
+  .venue-image {
+    object-fit: cover;
+    @media (max-width: 520px) {
+      width: 100px;
+    }
   }
 }

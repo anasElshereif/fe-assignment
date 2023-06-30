@@ -22,7 +22,7 @@ export default function Time() {
     />
   );
   return (
-    <div className="flex gap-30">
+    <div className="flex gap-30 time-container">
       <Form.Item
         label="Date"
         name="date"
@@ -32,14 +32,13 @@ export default function Time() {
             message: 'Please select date !',
           },
         ]}
-        className="session-input-item"
+        className="session-input-item date-picker"
       >
         <DatePicker
-          className="wide"
+          className="wide picker"
           format="YYYY-MM-DD"
           placeholder="Jan . 01 . 2022"
           disabledDate={disabledDate}
-          style={{ width: '355px' }}
           suffixIcon={<Image src={DropdownIcon} alt="dropdown" />}
         />
       </Form.Item>
@@ -52,7 +51,7 @@ export default function Time() {
             message: 'Please select from time !',
           },
         ]}
-        className="session-input-item width-25"
+        className="session-input-item width-25 time-picker"
       >
         {TimePicker()}
       </Form.Item>
@@ -65,7 +64,7 @@ export default function Time() {
             message: 'Please select till time !',
           },
         ]}
-        className="session-input-item width-25"
+        className="session-input-item width-25 time-picker"
       >
         {TimePicker()}
       </Form.Item>

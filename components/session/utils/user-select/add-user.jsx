@@ -63,6 +63,7 @@ export default function AddUser({ close, open, label, pushUser }) {
       wrapClassName="add-user"
       className="add-user-body"
       width={447}
+      centered
     >
       <Spin spinning={formSpin}>
         <div className="add-user-container">

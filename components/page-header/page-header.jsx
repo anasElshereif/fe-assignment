@@ -12,7 +12,7 @@ export default function PageHeader({ prevPage, pageTitle, children }) {
             <span className="f-14 fw-4 d-wc">{prevPage.title}</span>
           </span>
         </Link>
-        <h1 className="wc f-20 fw-7 capitalize">{pageTitle}</h1>
+        <h1 className="wc f-20 fw-7 capitalize title">{pageTitle}</h1>
       </div>
       <div>{children}</div>
     </header>

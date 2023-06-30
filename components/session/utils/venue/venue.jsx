@@ -72,7 +72,7 @@ export default function VenueSelect({ prefilledVenue, resetSelectedVenue }) {
       </Form.Item>
       {venue && (
         <div className="venue-card mt-30 flex">
-          <Image src={venue.image} alt={venue.name} width={180} height={85} />
+          <Image src={venue.image} alt={venue.name} width={180} height={85} className="venue-image" />
           <div className="content flex-col gap-5">
             <h2 className="wc fw-7">{venue.name}</h2>
             <span className="l-gc f-12 fw-4">Venue Capacity: {venue.capacity}</span>

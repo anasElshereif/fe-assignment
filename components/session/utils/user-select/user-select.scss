@@ -58,6 +58,9 @@
       border: 1px solid $dark-gray;
       background: $card-bg;
       flex-grow: 1;
+      @media (max-width: 520px) {
+        padding: 8px 12px;
+      }
     }
   }
 }
@@ -73,6 +76,10 @@
       .add-user-container {
         padding: 30px;
         padding-bottom: 40px;
+        @media (max-width: 520px) {
+          padding: 15px;
+          padding-bottom: 20px;
+        }
         .session-input-item {
           margin-bottom: 20px;
         }
