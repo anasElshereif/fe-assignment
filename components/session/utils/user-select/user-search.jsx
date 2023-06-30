@@ -10,7 +10,6 @@ export default function UserSearch({ searchQuery, searchResult, offset, loading 
   const changeSearchValue = (e) => {
     if (setHolder) setHolder(false);
     setSearchValue(e.target.value);
-    loading(true);
   };
 
   useEffect(() => {
@@ -21,6 +20,8 @@ export default function UserSearch({ searchQuery, searchResult, offset, loading 
   useEffect(() => {
     if (holder) return undefined; // to prevent useEffect from fetching data in first render
     const timeOutId = setTimeout(() => {
+      if (searchValue?.length === 0 || !searchValue) return;
+      loading(true);
       UsersService.SearchUsers(searchValue, offset)
         .then((res) => {
           searchResult(res.data);
