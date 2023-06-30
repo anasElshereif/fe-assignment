@@ -85,6 +85,9 @@ export default function Session() {
                 selectedModerators={(speakers) => {
                   setSelectedModerators(speakers);
                 }}
+                resetFieldOnEmpty={(value) => {
+                  sessionForm.resetFields([value]);
+                }}
               />
             </Form>
           </div>
