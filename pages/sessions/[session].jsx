@@ -52,7 +52,7 @@ export default function Session() {
 
   return (
     <main className="page">
-      <PageHeader prevPage={{ route: '/sessions', title: 'All Sessions' }} pageTitle="Sessions">
+      <PageHeader prevPage={{ route: '/sessions', title: 'All Sessions' }} pageTitle={sessionData?.title || 'Session'}>
         <div className="flex action-btns gap-1">
           <Link href="/sessions">
             <button type="button" className="l-dark-bg wc action-btn">
