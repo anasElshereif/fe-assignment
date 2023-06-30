@@ -149,7 +149,7 @@ export default function UserSelect({
   }, [users]);
 
   useEffect(() => {
-    if (searchResult && searchResult.count > 0) {
+    if (searchResult) {
       setUsersData(searchResult);
       setUsersOptions(searchResult.users);
     } else {
@@ -202,7 +202,7 @@ export default function UserSelect({
         rules={[
           {
             required: true,
-            message: `Please input select ${label} !`,
+            message: `Please select ${label} !`,
           },
         ]}
       >

@@ -35,6 +35,7 @@ export default function AddSession() {
     delete payloadObj.speaker_ids;
     delete payloadObj.moderator_ids;
     delete payloadObj.cover_image;
+    delete payloadObj.search_field;
     delete payloadObj.venue; // not allowed in be endpoint
 
     const payload = new FormData();

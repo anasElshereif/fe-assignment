@@ -1,4 +1,4 @@
-import { Input, message } from 'antd';
+import { Input, message, Form } from 'antd';
 import { useState, useEffect } from 'react';
 import UsersService from '../../../../services/users/users';
 
@@ -37,5 +37,9 @@ export default function UserSearch({ searchQuery, searchResult, offset, loading 
   }, [searchValue]);
   // be endpoint throws 500 (internal server error)
 
-  return <Input placeholder="Search.." value={searchValue} onChange={changeSearchValue} className="search-input" />;
+  return (
+    <Form.Item name="search_field" preserve style={{ marginBottom: '0px' }}>
+      <Input placeholder="Search.." value={searchValue} onChange={changeSearchValue} className="search-input" />
+    </Form.Item>
+  );
 }
