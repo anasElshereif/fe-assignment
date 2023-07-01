@@ -176,6 +176,7 @@ export default function UserSelect({
         loading={(loading) => {
           setLoadSpin(loading);
         }}
+        name={name}
       />
       <button type="button" className="add-user flex-row-btw" onClick={switchAddUser}>
         <span>Add new {label}</span>

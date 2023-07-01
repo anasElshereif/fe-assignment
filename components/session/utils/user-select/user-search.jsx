@@ -2,7 +2,7 @@ import { Input, message, Form } from 'antd';
 import { useState, useEffect } from 'react';
 import UsersService from '../../../../services/users/users';
 
-export default function UserSearch({ searchQuery, searchResult, offset, loading }) {
+export default function UserSearch({ searchQuery, searchResult, offset, loading, name }) {
   // search input
   const [searchValue, setSearchValue] = useState();
   const [holder, setHolder] = useState(true);
@@ -38,7 +38,7 @@ export default function UserSearch({ searchQuery, searchResult, offset, loading 
   // be endpoint throws 500 (internal server error)
 
   return (
-    <Form.Item name="search_field" preserve style={{ marginBottom: '0px' }}>
+    <Form.Item name={`${name}_search_field`} preserve style={{ marginBottom: '0px' }}>
       <Input placeholder="Search.." value={searchValue} onChange={changeSearchValue} className="search-input" />
     </Form.Item>
   );
